@@ -5,13 +5,21 @@ import { HomeSlide } from './slides/home-slide';
 import { ProjectsSlide } from './slides/projects-slide';
 import { CalendarSlide } from './slides/calendar-slide';
 import { AboutSlide } from './slides/about-slide';
+import { ContactSlide } from './slides/contact-slide';
 
 const slides = [
   { id: 'home', label: 'Home', component: HomeSlide },
   { id: 'projects', label: 'Projects', component: ProjectsSlide },
   { id: 'calendar', label: 'Calendar', component: CalendarSlide },
   { id: 'about', label: 'About', component: AboutSlide },
+  { id: 'contact', label: 'Contact', component: ContactSlide },
 ];
+
+const slideVariants = {
+  enter: (dir: number) => ({ x: dir > 0 ? 1000 : -1000, opacity: 0 }),
+  center: { zIndex: 1, x: 0, opacity: 1 },
+  exit: (dir: number) => ({ zIndex: 0, x: dir < 0 ? 1000 : -1000, opacity: 0 }),
+};
 
 export function Carousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,65 +30,52 @@ export function Carousel() {
     setMounted(true);
   }, []);
 
-  const slideVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (dir: number) => ({
-      zIndex: 0,
-      x: dir < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
+  const goTo = (index: number) => {
+    if (index === currentIndex) return;
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
   };
 
-  const paginate = (newDirection: number) => {
-    setDirection(newDirection);
-    setCurrentIndex((prev) => {
-      const next = prev + newDirection;
-      if (next < 0) return slides.length - 1;
-      if (next >= slides.length) return 0;
-      return next;
-    });
+  const paginate = (dir: number) => {
+    const next = (currentIndex + dir + slides.length) % slides.length;
+    setDirection(dir);
+    setCurrentIndex(next);
   };
 
-  if (!mounted) {
-    return null;
-  }
+  if (!mounted) return null;
 
   const CurrentSlide = slides[currentIndex].component;
 
   return (
     <div className="relative w-full h-screen bg-background overflow-hidden">
-      {/* Navigation Menu */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-8 border-b border-border">
-        <div className="text-xl font-bold tracking-tight">Portfolio</div>
-        <div className="hidden md:flex gap-12 items-center">
+      {/* ── Nav ── */}
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 border-b border-border bg-background/95 backdrop-blur-sm">
+        <span className="font-mono text-sm font-semibold tracking-tight">Portfolio</span>
+        <div className="hidden md:flex gap-10 items-center">
           {slides.map((slide, index) => (
             <motion.button
               key={slide.id}
-              onClick={() => {
-                setDirection(index > currentIndex ? 1 : -1);
-                setCurrentIndex(index);
-              }}
-              className={`text-sm font-medium transition-colors ${
+              onClick={() => goTo(index)}
+              className={`text-sm font-medium transition-colors cursor-pointer relative pb-0.5 ${
                 currentIndex === index
                   ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
-              whileHover={{ y: -2 }}>
+              whileHover={{ y: -1 }}>
               {slide.label}
+              {/* Active underline */}
+              {currentIndex === index && (
+                <motion.span
+                  layoutId="nav-underline"
+                  className="absolute -bottom-5.5 left-0 right-0 h-[1.5px] bg-[#2d4a2d]"
+                />
+              )}
             </motion.button>
           ))}
         </div>
       </nav>
 
-      {/* Main Carousel */}
+      {/* ── Main Carousel ── */}
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div
           key={currentIndex}
@@ -91,60 +86,63 @@ export function Carousel() {
           exit="exit"
           transition={{
             x: { type: 'spring', stiffness: 300, damping: 30 },
-            opacity: { duration: 0.5 },
+            opacity: { duration: 0.4 },
           }}
-          className="absolute inset-0 w-full h-full">
+          className="absolute inset-0 w-full h-full pt-14.25">
           <CurrentSlide />
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation Arrows */}
+      {/* ── Prev arrow ── */}
       <motion.button
         onClick={() => paginate(-1)}
-        className="fixed left-8 bottom-8 z-40 p-3 hover:bg-secondary rounded-full transition-colors"
+        className="fixed left-6 bottom-[50%] z-40 p-2 text-muted-foreground hover:text-foreground transition-colors"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Previous slide">
-        <ChevronLeft size={24} />
+        <ChevronLeft size={20} />
       </motion.button>
 
+      {/* ── Next arrow ── */}
       <motion.button
         onClick={() => paginate(1)}
-        className="fixed right-8 bottom-8 z-40 p-3 hover:bg-secondary rounded-full transition-colors"
+        className="fixed right-6 bottom-[50%] z-40 p-2 text-muted-foreground hover:text-foreground transition-colors"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Next slide">
-        <ChevronRight size={24} />
+        <ChevronRight size={20} />
       </motion.button>
 
-      {/* Slide Indicators */}
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 flex gap-2">
+      {/* ── Slide indicators ── */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5">
         {slides.map((_, index) => (
           <motion.button
             key={index}
-            onClick={() => {
-              setDirection(index > currentIndex ? 1 : -1);
-              setCurrentIndex(index);
-            }}
-            className={`h-2 rounded-full transition-all ${
-              currentIndex === index ? 'w-8 bg-foreground' : 'w-2 bg-muted'
+            onClick={() => goTo(index)}
+            aria-label={`Go to slide ${index + 1}`}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              currentIndex === index
+                ? 'w-6 bg-[#2d4a2d]'
+                : 'w-1.5 bg-[#2d4a2d]/50 hover:bg-muted-foreground/60'
             }`}
             whileHover={{ scale: 1.2 }}
           />
         ))}
       </div>
 
-      {/* Social Links */}
-      <div className="fixed bottom-8 right-16 z-40 flex gap-6 md:gap-8">
+      {/* ── Social links ── */}
+      <div className="fixed bottom-7 right-14 z-40 flex gap-5">
         <motion.a
-          href="https://twitter.com"
-          className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          href="mailto:raihan.ardianata@gmail.com"
+          className="font-mono text-[11px] text-muted-foreground hover:text-foreground transition-colors tracking-wide"
           whileHover={{ y: -2 }}>
-          Twitter
+          Email
         </motion.a>
         <motion.a
-          href="https://github.com"
-          className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          href="https://github.com/Mad1Duck"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-[11px] text-muted-foreground hover:text-foreground transition-colors tracking-wide"
           whileHover={{ y: -2 }}>
           GitHub
         </motion.a>
