@@ -121,9 +121,11 @@ function StackPill({ label }: { label: string }) {
 
 function PreviewPanel({ project }: { project: Project }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const iframeWrapRef = useRef<HTMLDivElement>(null);
   const [iframeBlocked, setIframeBlocked] = useState(false);
   const [screenshotError, setScreenshotError] = useState(false);
   const [iframeLoading, setIframeLoading] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const url = project.demo ?? project.repo;
   const label = project.demoLabel ?? project.repoLabel;
@@ -133,6 +135,20 @@ function PreviewPanel({ project }: { project: Project }) {
     const timer = setTimeout(() => setIframeLoading(false), 10000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', handler);
+    return () => document.removeEventListener('fullscreenchange', handler);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      iframeWrapRef.current?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
 
   const reload = () => {
     if (!iframeRef.current) return;
@@ -176,6 +192,12 @@ function PreviewPanel({ project }: { project: Project }) {
           className="font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors px-1">
           ↺
         </button>
+        <button
+          onClick={toggleFullscreen}
+          title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+          className="font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors px-1">
+          {isFullscreen ? '⊡' : '⊞'}
+        </button>
         <a
           href={url}
           target="_blank"
@@ -186,7 +208,7 @@ function PreviewPanel({ project }: { project: Project }) {
       </div>
 
       {/* Iframe */}
-      <div className="flex-1 relative overflow-hidden">
+      <div ref={iframeWrapRef} className="flex-1 relative overflow-hidden">
         {!iframeBlocked && (
           <iframe
             ref={iframeRef}
@@ -361,7 +383,6 @@ const itemVariants: Variants = {
 export function ProjectsSlide() {
   const [selected, setSelected] = useState<Project>(PROJECTS[0]);
   const [tab, setTab] = useState<ProjectTab>('preview');
-
   return (
     <div className="relative w-full h-full pt-5 pb-24 px-8 sm:px-12 lg:px-16 overflow-hidden">
       {/* Grain overlay */}
