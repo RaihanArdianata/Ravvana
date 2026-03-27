@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, type Variants, AnimatePresence } from 'framer-motion';
 
 type ProjectStatus = 'live' | 'wip' | 'archived';
@@ -52,29 +52,43 @@ const PROJECTS: Project[] = [
     id: 3,
     name: 'PayID SDK',
     type: 'Open Source SDK',
-    year: '2024',
-    status: 'wip',
-    statusLabel: 'In Progress',
+    year: '2025',
+    status: 'live',
+    statusLabel: 'Live',
     desc: 'An open-source payment SDK combining a WASM rule engine, EIP-712 typed proofs, and ERC-4337 account abstraction. Designed to make on-chain payment flows composable and auditable.',
     stack: ['TypeScript', 'WASM', 'EIP-712', 'ERC-4337', 'Viem'],
-    demo: null,
-    demoLabel: null,
+    demo: 'https://payid-docs.vercel.app/',
+    demoLabel: 'payid-docs',
     repo: 'https://github.com/Mad1Duck/payid',
     repoLabel: 'github.com/Mad1Duck/payid',
   },
   {
     id: 4,
-    name: 'TS Microservice Gen',
-    type: 'CLI Tool',
-    year: '2023',
-    status: 'archived',
-    statusLabel: 'Archived',
-    desc: 'A TypeScript microservice generator with NestJS-style decorators optimized for Bun runtime. Ships 50+ production-grade templates covering CRUD, observability, testing, and DevOps scaffolding.',
-    stack: ['TypeScript', 'Bun', 'NestJS', 'CLI', 'Docker'],
-    demo: null,
-    demoLabel: null,
-    repo: 'https://github.com/Mad1Duck/ts-micro-gen',
-    repoLabel: 'github.com/Mad1Duck/ts-micro-gen',
+    name: 'Hono Decorator Template',
+    type: 'npm Package',
+    year: '2024',
+    status: 'live',
+    statusLabel: 'Live',
+    desc: 'A scaffold CLI and backend template for Hono with NestJS-inspired TypeScript decorators. Ships controllers, DI container, auth guards, rate limiting, Redis caching, and observability out of the box — built for Bun runtime.',
+    stack: ['TypeScript', 'Hono', 'Bun', 'Drizzle ORM', 'Redis', 'Zod', 'Docker'],
+    demo: 'https://frontend-hono-template-decorator.vercel.app/',
+    demoLabel: 'Hono Decorator Template',
+    repo: 'https://github.com/Mad1Duck/hono-backend-template-decorator-style',
+    repoLabel: 'github.com/Mad1Duck/hono-backend-template-decorator-style',
+  },
+  {
+    id: 5,
+    name: 'Wall Message',
+    type: 'Web App',
+    year: '2026',
+    status: 'live',
+    statusLabel: 'Live',
+    desc: 'A public wall where anyone can post messages — authenticated or anonymously. Leave a note, share a thought, or just say hi.',
+    stack: ['TypeScript', 'React', 'Vercel'],
+    demo: 'https://wall-message.vercel.app',
+    demoLabel: 'wall-message.vercel.app',
+    repo: 'https://github.com/Mad1Duck/wall-message',
+    repoLabel: 'github.com/Mad1Duck/wall-message',
   },
 ];
 
@@ -109,23 +123,25 @@ function PreviewPanel({ project }: { project: Project }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeBlocked, setIframeBlocked] = useState(false);
   const [screenshotError, setScreenshotError] = useState(false);
+  const [iframeLoading, setIframeLoading] = useState(true);
 
   const url = project.demo ?? project.repo;
   const label = project.demoLabel ?? project.repoLabel;
+
+  useEffect(() => {
+    if (!project.demo) return;
+    const timer = setTimeout(() => setIframeLoading(false), 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const reload = () => {
     if (!iframeRef.current) return;
     const src = iframeRef.current.src;
     iframeRef.current.src = '';
+    setIframeLoading(true);
     setTimeout(() => {
       if (iframeRef.current) iframeRef.current.src = src;
     }, 80);
-  };
-
-  const handleIframeLoad = () => {
-    try {
-      void iframeRef.current?.contentWindow?.location.href;
-    } catch {}
   };
 
   if (!project.demo) {
@@ -178,9 +194,20 @@ function PreviewPanel({ project }: { project: Project }) {
             title={project.name}
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
             className="w-full h-full border-none block"
-            onLoad={handleIframeLoad}
-            onError={() => setIframeBlocked(true)}
+            onLoad={() => setIframeLoading(false)}
+            onError={() => {
+              setIframeBlocked(true);
+              setIframeLoading(false);
+            }}
           />
+        )}
+
+        {/* Loading fallback */}
+        {iframeLoading && !iframeBlocked && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-secondary/40">
+            <div className="w-5 h-5 rounded-full border-2 border-[#2d4a2d] border-t-transparent animate-spin" />
+            <p className="font-mono text-[11px] text-muted-foreground">Loading preview…</p>
+          </div>
         )}
 
         {/* Fallback: screenshot */}

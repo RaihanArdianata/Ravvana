@@ -6,6 +6,7 @@ import { ProjectsSlide } from './slides/projects-slide';
 import { CalendarSlide } from './slides/calendar-slide';
 import { AboutSlide } from './slides/about-slide';
 import { ContactSlide } from './slides/contact-slide';
+import Logo from '../assets/logo.png';
 
 const slides = [
   { id: 'home', label: 'Home', component: HomeSlide },
@@ -50,7 +51,10 @@ export function Carousel() {
     <div className="relative w-full h-screen bg-background overflow-hidden">
       {/* ── Nav ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 border-b border-border bg-background/95 backdrop-blur-sm">
-        <span className="font-mono text-sm font-semibold tracking-tight">Portfolio</span>
+        <div className="flex flex-row gap-x-4 items-center">
+          <img src={Logo} alt="" width={40} />
+          <span className="font-mono text-xl font-semibold tracking-tight">Rahvvana</span>
+        </div>
         <div className="hidden md:flex gap-10 items-center">
           {slides.map((slide, index) => (
             <motion.button
