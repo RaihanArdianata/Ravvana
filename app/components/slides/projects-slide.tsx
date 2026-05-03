@@ -29,7 +29,7 @@ const PROJECTS: Project[] = [
     statusLabel: 'Live',
     desc: 'A desktop Web3 developer tool built with Electron + React + Vite. Features a P2P collaboration layer via Trystero (BitTorrent DHT, zero backend), smart contract management, and a polished dark-themed UI for blockchain developers.',
     stack: ['Electron', 'React', 'Vite', 'TypeScript', 'Trystero', 'Tailwind'],
-    demo: 'https://hardhat-studio-landing-page.vercel.app',
+    demo: 'https://hardhat-studio-landing-page.vercel.app/',
     demoLabel: 'hardhatstudio.app',
     repo: 'https://github.com/Mad1Duck/hardhat-studio',
     repoLabel: 'github.com/Mad1Duck/hardhat-studio',
@@ -71,10 +71,10 @@ const PROJECTS: Project[] = [
     statusLabel: 'Live',
     desc: 'A scaffold CLI and backend template for Hono with NestJS-inspired TypeScript decorators. Ships controllers, DI container, auth guards, rate limiting, Redis caching, and observability out of the box — built for Bun runtime.',
     stack: ['TypeScript', 'Hono', 'Bun', 'Drizzle ORM', 'Redis', 'Zod', 'Docker'],
-    demo: 'https://frontend-hono-template-decorator.vercel.app/',
+    demo: 'https://frontend-hono-template-decorator.vercel.app',
     demoLabel: 'Hono Decorator Template',
-    repo: 'https://github.com/Mad1Duck/hono-backend-template-decorator-style',
-    repoLabel: 'github.com/Mad1Duck/hono-backend-template-decorator-style',
+    repo: 'https://github.com/Mad1Duck/hono-decorator',
+    repoLabel: 'github.com/Mad1Duck/hono-decorator',
   },
   {
     id: 5,
@@ -277,7 +277,7 @@ function PreviewPanel({ project }: { project: Project }) {
 
 function DetailsPanel({ project }: { project: Project }) {
   return (
-    <div className="flex-1 overflow-y-auto px-8 py-7 flex flex-col gap-5">
+    <div className="flex-1 overflow-y-auto px-5 lg:px-8 py-7 flex flex-col gap-5">
       <div className="border-l-[3px] border-[#2d4a2d] pl-4">
         <h2 className="font-serif text-3xl font-black leading-tight tracking-tight">
           {project.name}
@@ -384,7 +384,7 @@ export function ProjectsSlide() {
   const [selected, setSelected] = useState<Project>(PROJECTS[0]);
   const [tab, setTab] = useState<ProjectTab>('preview');
   return (
-    <div className="relative w-full h-full pt-5 pb-24 px-8 sm:px-12 lg:px-16 overflow-hidden">
+    <div className="relative w-full h-full pt-20 lg:pt-5 pb-32 lg:pb-24 px-4 sm:px-12 lg:px-16 overflow-hidden">
       {/* Grain overlay */}
       <div
         aria-hidden
@@ -396,14 +396,14 @@ export function ProjectsSlide() {
         }}
       />
 
-      <div className="relative z-10 flex h-full" style={{ gridTemplateColumns: '300px 1fr' }}>
+      <div className="relative z-10 flex flex-col lg:flex-row h-full min-h-0">
         {/* LEFT — project list */}
         <motion.div
           variants={listVariants}
           initial="hidden"
           animate="visible"
-          className="w-75 shrink-0 border-r border-border flex flex-col overflow-y-auto">
-          <div className="px-6 pt-7 pb-4">
+          className="w-full lg:w-75 shrink-0 border-b lg:border-b-0 lg:border-r border-border flex flex-row lg:flex-col overflow-x-auto lg:overflow-y-auto scrollbar-hide">
+          <div className="hidden lg:block px-6 pt-7 pb-4">
             <p className="font-mono text-[10px] tracking-[0.12em] text-muted-foreground/60 uppercase">
               Projects
             </p>
@@ -418,15 +418,15 @@ export function ProjectsSlide() {
                 setTab('preview');
               }}
               className={`
-                w-full text-left flex flex-col gap-1 px-6 py-3.5 border-l-2 transition-all duration-150
+                shrink-0 lg:w-full text-left flex flex-col gap-1 px-5 lg:px-6 py-4 lg:py-3.5 border-b-2 lg:border-b-0 lg:border-l-2 transition-all duration-150
                 ${
                   selected.id === p.id
-                    ? 'bg-[#e8f0e8] border-l-[#2d4a2d]'
-                    : 'border-l-transparent hover:bg-secondary'
+                    ? 'bg-[#e8f0e8] border-[#2d4a2d]'
+                    : 'border-transparent hover:bg-secondary'
                 }
               `}>
               <span
-                className={`text-[13px] font-semibold transition-colors ${selected.id === p.id ? 'text-[#1a2e1a]' : 'text-foreground'}`}>
+                className={`text-[12px] lg:text-[13px] font-semibold transition-colors ${selected.id === p.id ? 'text-[#1a2e1a]' : 'text-foreground'}`}>
                 {p.name}
               </span>
               <div className="flex items-center gap-1.5">
@@ -439,7 +439,7 @@ export function ProjectsSlide() {
                         : 'bg-muted-foreground/40'
                   }`}
                 />
-                <span className="font-mono text-[10px] text-muted-foreground">
+                <span className="font-mono text-[9px] lg:text-[10px] text-muted-foreground whitespace-nowrap">
                   {p.type} · {p.year}
                 </span>
               </div>
@@ -450,7 +450,7 @@ export function ProjectsSlide() {
         {/* RIGHT — tab panel */}
         <div className="flex-1 flex flex-col min-w-0 h-full">
           {/* Tab bar */}
-          <div className="flex items-center gap-0 border-b border-border px-8 shrink-0">
+          <div className="flex items-center gap-0 border-b border-border px-4 lg:px-8 shrink-0">
             {(['preview', 'details'] as ProjectTab[]).map((t) => (
               <button
                 key={t}

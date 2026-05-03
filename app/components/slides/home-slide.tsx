@@ -13,21 +13,17 @@ const itemVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
 };
 
-// tier: 'core' = primary, 'secondary' = familiar, 'optional' = bonus
 const STACK = [
-  // Core — primary daily drivers
   { label: 'TypeScript', tier: 'core' },
   { label: 'Hono', tier: 'core' },
   { label: 'React', tier: 'core' },
   { label: 'Electron', tier: 'core' },
   { label: 'PostgreSQL', tier: 'core' },
   { label: 'Hardhat', tier: 'core' },
-  // Secondary — use regularly
   { label: 'Next.js', tier: 'secondary' },
   { label: 'Elysia', tier: 'secondary' },
   { label: 'Socket.io', tier: 'secondary' },
   { label: 'Docker', tier: 'secondary' },
-  // Optional — familiar
   { label: 'React Native', tier: 'optional' },
 ] as const;
 
@@ -43,7 +39,7 @@ const pillClass = (tier: (typeof STACK)[number]['tier']) => {
 
 export function HomeSlide() {
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full h-full overflow-y-auto">
       {/* Grain overlay */}
       <div
         aria-hidden
@@ -55,13 +51,13 @@ export function HomeSlide() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-center h-full">
+      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 lg:items-center lg:h-full px-6 sm:px-8 pb-24 lg:pb-0">
         {/* Left Side */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col gap-7 lg:pr-16 lg:border-r border-border">
+          className="flex flex-col gap-7 lg:pr-16 lg:border-r border-border border-b lg:border-b-0 py-8 lg:py-0">
           {/* Eyebrow */}
           <motion.div variants={itemVariants} className="flex items-center gap-3">
             <span className="w-7 h-px bg-muted-foreground/30" />
@@ -73,7 +69,7 @@ export function HomeSlide() {
           {/* Heading */}
           <motion.h1
             variants={itemVariants}
-            className="font-black text-7xl sm:text-8xl lg:text-[5.5rem] leading-none tracking-tight">
+            className="font-black text-5xl sm:text-7xl lg:text-[5.5rem] leading-none tracking-tight">
             Welcome
             <span className="text-[#2d4a2d]">.</span>
           </motion.h1>
@@ -111,7 +107,7 @@ export function HomeSlide() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col gap-7 lg:pl-16 mt-12 lg:mt-0">
+          className="flex flex-col gap-7 lg:pl-16 py-8 lg:py-0">
           {/* About */}
           <motion.div variants={itemVariants} className="space-y-3">
             <p className="font-mono text-[10px] tracking-widest text-muted-foreground/60 uppercase">

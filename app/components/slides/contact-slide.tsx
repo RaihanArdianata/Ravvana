@@ -7,9 +7,9 @@ const WEB3FORMS_ACCESS_KEY = 'be811e4c-62db-452f-a6a7-77533cab87f3';
 const socialLinks = [
   {
     icon: Mail,
-    href: 'mailto:raihan.ardianata@gamil.com',
+    href: 'mailto:raihan.ardianata@gmail.com',
     label: 'Email',
-    handle: 'raihan.ardianata@gamil.com',
+    handle: 'raihan.ardianata@gmail.com',
   },
   { icon: Github, href: 'https://github.com/Mad1Duck', label: 'GitHub', handle: '@Mad1Duck' },
   {
@@ -92,20 +92,19 @@ export function ContactSlide() {
   };
 
   return (
-    <div className="w-full h-full pt-16 px-8 sm:px-12 lg:px-16 overflow-hidden">
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-center h-full">
+    <div className="w-full h-full overflow-y-auto pt-16 sm:pt-20 lg:pt-0">
+      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 lg:items-center lg:h-full px-6 sm:px-10 lg:px-12 pb-32 lg:pb-0">
         {/* ── LEFT: Form ── */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col gap-5 py-6 mr-5">
+          className="flex flex-col gap-5 py-8 lg:py-6 lg:mr-5 border-b lg:border-b-0 lg:border-r border-border">
           {/* Heading */}
           <motion.div variants={itemVariants} className="border-l-4 border-foreground pl-5">
-            <h1 className="text-5xl sm:text-6xl font-black leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
               Let's Work
-              <br />
-              Together
+              <br className="hidden sm:block" /> Together
             </h1>
             <p className="text-sm text-muted-foreground mt-2 max-w-xs leading-relaxed">
               Open to freelance & collaborations. Response within 24–48 hrs.
@@ -113,7 +112,7 @@ export function ContactSlide() {
           </motion.div>
 
           {/* Name + Email row */}
-          <motion.div variants={itemVariants} className="grid grid-cols-2 gap-3">
+          <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-medium mb-1.5 text-muted-foreground uppercase tracking-widest">
                 Name
@@ -161,7 +160,7 @@ export function ContactSlide() {
           </motion.div>
 
           {/* Submit + status */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3">
+          <motion.div variants={itemVariants} className="flex items-center gap-3 flex-wrap">
             <motion.button
               onClick={handleSubmit}
               disabled={isSubmitting}
@@ -219,12 +218,12 @@ export function ContactSlide() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col gap-5 py-6 lg:pl-6 lg:border-l border-border">
+          className="flex flex-col gap-5 py-12 lg:py-6 lg:pl-10">
           <motion.div variants={itemVariants}>
             <h3 className="text-sm font-bold tracking-widest uppercase mb-5 pb-3 border-b border-border">
               What I Can Help With
             </h3>
-            <div className="grid grid-cols-1 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
               {services.map((s) => (
                 <div
                   key={s.label}

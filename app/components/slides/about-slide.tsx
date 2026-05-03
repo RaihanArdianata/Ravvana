@@ -69,7 +69,7 @@ function Divider() {
 
 export function AboutSlide() {
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full h-full overflow-y-auto">
       {/* Grain overlay */}
       <div
         aria-hidden
@@ -81,17 +81,17 @@ export function AboutSlide() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-center h-full">
+      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 lg:items-stretch lg:h-full pb-24 lg:pb-0">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="border-r border-border flex flex-col gap-6 px-8 py-7 overflow-y-auto">
+          className="flex flex-col gap-6 px-8 py-7 border-b lg:border-b-0 lg:border-r border-border lg:overflow-y-auto">
           {/* Heading */}
           <motion.div variants={itemVariants} className="flex items-stretch gap-3">
             <div className="w-0.75 bg-[#2d4a2d] rounded-sm shrink-0" />
             <div>
-              <h1 className="font-serif text-5xl font-black leading-none tracking-tight">
+              <h1 className="font-serif text-4xl sm:text-5xl font-black leading-none tracking-tight">
                 About Me
               </h1>
               <p className="text-sm text-muted-foreground mt-2 max-w-xs leading-relaxed">
@@ -168,7 +168,7 @@ export function AboutSlide() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col gap-6 px-8 py-7 overflow-y-auto">
+          className="flex flex-col gap-6 px-8 py-7 lg:overflow-y-auto">
           {/* Experience */}
           <motion.div variants={itemVariants}>
             <SectionLabel>Experience</SectionLabel>

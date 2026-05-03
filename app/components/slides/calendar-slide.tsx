@@ -100,7 +100,7 @@ export function CalendarSlide() {
   const milestoneDays = new Set(data.milestones.map((m) => m.day));
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full h-full overflow-y-auto">
       {/* Grain overlay */}
       <div
         aria-hidden
@@ -112,12 +112,12 @@ export function CalendarSlide() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-center h-full">
+      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 lg:items-stretch lg:h-full pb-24 lg:pb-0">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="border-r border-border flex flex-col gap-5 px-8 py-7 overflow-y-auto">
+          className="flex flex-col gap-5 px-8 py-7 border-b lg:border-b-0 lg:border-r border-border lg:overflow-y-auto">
           {/* Month heading */}
           <motion.div variants={itemVariants} className="flex items-stretch gap-3">
             <div className="w-0.75 bg-[#2d4a2d] rounded-sm shrink-0" />
@@ -233,7 +233,7 @@ export function CalendarSlide() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col gap-4 px-8 py-7 overflow-y-auto">
+          className="flex flex-col gap-4 px-8 py-7 lg:overflow-y-auto">
           {/* Header */}
           <motion.div variants={itemVariants} className="flex items-stretch gap-3">
             <div className="w-0.75 bg-[#2d4a2d] rounded-sm shrink-0" />
