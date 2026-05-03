@@ -85,7 +85,7 @@ const PROJECTS: Project[] = [
     statusLabel: 'Live',
     desc: 'A public wall where anyone can post messages — authenticated or anonymously. Leave a note, share a thought, or just say hi.',
     stack: ['TypeScript', 'React', 'Vercel'],
-    demo: 'https://wall-message.vercel.app',
+    demo: 'https://wall-message.vercel.app/',
     demoLabel: 'wall-message.vercel.app',
     repo: 'https://github.com/Mad1Duck/wall-message',
     repoLabel: 'github.com/Mad1Duck/wall-message',
