@@ -126,6 +126,7 @@ function PreviewPanel({ project }: { project: Project }) {
   const [screenshotError, setScreenshotError] = useState(false);
   const [iframeLoading, setIframeLoading] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [useScreenshot, setUseScreenshot] = useState(false);
 
   const url = project.demo ?? project.repo;
   const label = project.demoLabel ?? project.repoLabel;
@@ -198,6 +199,16 @@ function PreviewPanel({ project }: { project: Project }) {
           className="font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors px-1">
           {isFullscreen ? '⊡' : '⊞'}
         </button>
+        <button
+          onClick={() => setUseScreenshot(!useScreenshot)}
+          title={useScreenshot ? 'Switch to Live Preview' : 'Switch to Screenshot'}
+          className={`font-mono text-[10px] px-2 py-0.5 rounded border transition-all ${
+            useScreenshot
+              ? 'bg-[#2d4a2d] text-white border-[#2d4a2d]'
+              : 'bg-transparent text-muted-foreground border-border hover:border-foreground'
+          }`}>
+          {useScreenshot ? 'LIVE' : 'IMG'}
+        </button>
         <a
           href={url}
           target="_blank"
@@ -208,13 +219,13 @@ function PreviewPanel({ project }: { project: Project }) {
       </div>
 
       {/* Iframe */}
-      <div ref={iframeWrapRef} className="flex-1 relative overflow-hidden">
-        {!iframeBlocked && (
+      <div ref={iframeWrapRef} className="flex-1 relative overflow-hidden bg-white">
+        {!iframeBlocked && !useScreenshot && (
           <iframe
             ref={iframeRef}
             src={url}
             title={project.name}
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-storage-access-by-user-activation"
             className="w-full h-full border-none block"
             onLoad={() => setIframeLoading(false)}
             onError={() => {
@@ -225,27 +236,27 @@ function PreviewPanel({ project }: { project: Project }) {
         )}
 
         {/* Loading fallback */}
-        {iframeLoading && !iframeBlocked && (
+        {iframeLoading && !iframeBlocked && !useScreenshot && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-secondary/40">
             <div className="w-5 h-5 rounded-full border-2 border-[#2d4a2d] border-t-transparent animate-spin" />
             <p className="font-mono text-[11px] text-muted-foreground">Loading preview…</p>
           </div>
         )}
 
-        {/* Fallback: screenshot */}
-        {iframeBlocked && (
+        {/* Fallback or Manual: screenshot */}
+        {(iframeBlocked || useScreenshot) && (
           <div className="absolute inset-0 flex flex-col">
             {!screenshotError ? (
               <>
                 <img
                   src={screenshotUrl(url)}
                   alt={`${project.name} screenshot`}
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-top bg-white"
                   onError={() => setScreenshotError(true)}
                 />
                 <div className="absolute bottom-0 inset-x-0 flex items-center justify-between px-3 py-1.5 bg-background/80 backdrop-blur-sm border-t border-border">
                   <span className="font-mono text-[10px] text-muted-foreground">
-                    Preview blocked · showing screenshot
+                    {useScreenshot ? 'Static Screenshot Mode' : 'Preview blocked · showing screenshot'}
                   </span>
                   <a
                     href={url}
