@@ -85,7 +85,7 @@ const PROJECTS: Project[] = [
     statusLabel: 'Live',
     desc: 'A public wall where anyone can post messages — authenticated or anonymously. Leave a note, share a thought, or just say hi.',
     stack: ['TypeScript', 'React', 'Vercel'],
-    demo: 'https://wall-message.vercel.app/',
+    demo: 'https://wall-message-frontend.vercel.app/',
     demoLabel: 'wall-message.vercel.app',
     repo: 'https://github.com/Mad1Duck/wall-message',
     repoLabel: 'github.com/Mad1Duck/wall-message',
@@ -256,7 +256,9 @@ function PreviewPanel({ project }: { project: Project }) {
                 />
                 <div className="absolute bottom-0 inset-x-0 flex items-center justify-between px-3 py-1.5 bg-background/80 backdrop-blur-sm border-t border-border">
                   <span className="font-mono text-[10px] text-muted-foreground">
-                    {useScreenshot ? 'Static Screenshot Mode' : 'Preview blocked · showing screenshot'}
+                    {useScreenshot
+                      ? 'Static Screenshot Mode'
+                      : 'Preview blocked · showing screenshot'}
                   </span>
                   <a
                     href={url}
