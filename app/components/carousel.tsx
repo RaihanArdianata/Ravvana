@@ -57,7 +57,7 @@ export function Carousel() {
         <nav className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-border bg-background/95 backdrop-blur-sm">
           <div className="flex flex-row gap-x-4 items-center">
             <img src={Logo} alt="" width={40} />
-            <span className="font-mono text-xl font-semibold tracking-tight">Rahvvana</span>
+            <span className="font-mono text-xl font-semibold tracking-tight">Nawasena</span>
           </div>
 
           <div className="flex items-center gap-1">
