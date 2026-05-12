@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, nawasena]
+    runs-on: [self-hosted, nawasena, nawasena-runner]
 
     steps:
       - name: Deploy VPS
