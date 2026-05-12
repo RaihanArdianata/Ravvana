@@ -81,12 +81,12 @@ export function AboutSlide() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 lg:items-stretch lg:h-full pb-24 lg:pb-0">
+      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 lg:items-center lg:h-full px-6 sm:px-10 lg:px-12 pb-24 lg:pb-0">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col gap-6 px-8 py-7 border-b lg:border-b-0 lg:border-r border-border lg:overflow-y-auto">
+          className="flex flex-col gap-6 py-8 lg:py-6 lg:pr-10 border-b lg:border-b-0 lg:border-r border-border">
           {/* Heading */}
           <motion.div variants={itemVariants} className="flex items-stretch gap-3">
             <div className="w-0.75 bg-[#2d4a2d] rounded-sm shrink-0" />
@@ -151,7 +151,7 @@ export function AboutSlide() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 bg-[#1a2e1a] text-[#f0f4f0] text-xs font-medium px-4 py-2 rounded-xs hover:opacity-85 transition-opacity">
-                GitHub ↗
+                GitHub
               </a>
               <a
                 href="https://discord.com/users/raihanard"
@@ -168,7 +168,7 @@ export function AboutSlide() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col gap-6 px-8 py-7 lg:overflow-y-auto">
+          className="flex flex-col gap-6 py-12 lg:py-6 lg:pl-10">
           {/* Experience */}
           <motion.div variants={itemVariants}>
             <SectionLabel>Experience</SectionLabel>

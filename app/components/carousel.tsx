@@ -150,7 +150,7 @@ export function Carousel() {
             opacity: { duration: 0.4 },
           }}
           className="absolute inset-0 w-full h-full pt-14.25">
-          <CurrentSlide />
+          <CurrentSlide goTo={goTo} />
         </motion.div>
       </AnimatePresence>
 

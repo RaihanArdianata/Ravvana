@@ -37,7 +37,7 @@ const pillClass = (tier: (typeof STACK)[number]['tier']) => {
   return `${base} border-border text-muted-foreground hover:bg-[#e8f0e8] hover:text-[#1a2e1a] hover:border-[#2d4a2d30]`;
 };
 
-export function HomeSlide() {
+export function HomeSlide({ goTo }: { goTo?: (index: number) => void }) {
   return (
     <div className="relative w-full h-full overflow-y-auto">
       {/* Grain overlay */}
@@ -85,10 +85,14 @@ export function HomeSlide() {
 
           {/* CTAs */}
           <motion.div variants={itemVariants} className="flex items-center gap-3 flex-wrap">
-            <button className="inline-flex items-center gap-2 bg-[#1a2e1a] text-[#f0f4f0] text-sm font-medium px-6 py-2.75 rounded-xs hover:opacity-85 transition-opacity cursor-pointer">
-              Get in Touch ↗
+            <button
+              onClick={() => goTo?.(4)}
+              className="inline-flex items-center gap-2 bg-[#1a2e1a] text-[#f0f4f0] text-sm font-medium px-6 py-2.75 rounded-xs hover:opacity-85 transition-opacity cursor-pointer">
+              Get in Touch
             </button>
-            <button className="inline-flex items-center gap-2 bg-transparent text-muted-foreground border border-border text-sm px-5 py-2.5 rounded-xs hover:text-foreground hover:border-foreground transition-all cursor-pointer">
+            <button
+              onClick={() => goTo?.(1)}
+              className="inline-flex items-center gap-2 bg-transparent text-muted-foreground border border-border text-sm px-5 py-2.5 rounded-xs hover:text-foreground hover:border-foreground transition-all cursor-pointer">
               View Projects
             </button>
           </motion.div>
