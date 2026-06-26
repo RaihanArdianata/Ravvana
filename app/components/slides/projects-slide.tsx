@@ -104,6 +104,20 @@ const PROJECTS: Project[] = [
     repo: 'https://github.com/Mad1Duck/wall-message',
     repoLabel: 'github.com/Mad1Duck/wall-message',
   },
+  {
+    id: 7,
+    name: 'Phantom Protocol',
+    type: 'Web3 · Bounty Marketplace',
+    year: '2026',
+    status: 'live',
+    statusLabel: 'Live',
+    desc: 'A decentralized bounty marketplace with on-chain escrow, Standard/Milestone/Flash task formats, and a reputation system. Next Features GitHub integration for in-context bounty posting, arbiter-based dispute resolution',
+    stack: ['Solidity', 'TypeScript', 'React', 'Hono', 'IPFS'],
+    demo: 'https://app.phantom.nawasena-labs.com/',
+    demoLabel: 'app.phantom.nawasena-labs.com',
+    repo: 'https://github.com/Mad1Duck/phantom',
+    repoLabel: 'github.com/Mad1Duck/phantom',
+  },
 ];
 
 const screenshotUrl = (url: string) =>
