@@ -119,10 +119,8 @@ export function HomeSlide({ goTo }: { goTo?: (index: number) => void }) {
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Fullstack developer with{' '}
-              <strong className="text-foreground font-medium">
-                5 years of professional experience
-              </strong>
-              . Strongest in backend — APIs, real-time systems, and databases — with solid frontend
+              <strong className="text-foreground font-medium">5 years of experience</strong>.
+              Strongest in backend — APIs, real-time systems, and databases — with solid frontend
               and blockchain depth.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -142,7 +140,7 @@ export function HomeSlide({ goTo }: { goTo?: (index: number) => void }) {
             <div className="flex">
               <div className="flex-1 pr-6 border-r border-border">
                 <p className="font-serif text-[2rem] font-black leading-none mb-1">5+</p>
-                <p className="text-xs text-muted-foreground">Years professional experience</p>
+                <p className="text-xs text-muted-foreground">Years experience</p>
               </div>
               <div className="flex-1 pl-6">
                 <p className="font-serif text-[2rem] font-black leading-none mb-1">3</p>
