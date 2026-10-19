@@ -148,7 +148,7 @@ const PROJECTS: Project[] = [
   },
   {
     id: 10,
-    name: 'POS SaaS',
+    name: 'Botram',
     type: 'SaaS · Restaurant Operations',
     year: '2026',
     status: 'live',
