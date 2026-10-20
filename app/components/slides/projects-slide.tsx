@@ -160,6 +160,20 @@ const PROJECTS: Project[] = [
     repo: 'https://github.com/Mad1Duck/pos-systems',
     repoLabel: 'github.com/Mad1Duck/pos-systems',
   },
+  {
+    id: 11,
+    name: 'Jira Report',
+    type: 'SaaS · Agile Reporting',
+    year: '2026',
+    status: 'live',
+    statusLabel: 'Live',
+    desc: 'An agile project-management platform built on top of Jira data — pulls sprints, stories, tasks, and subtasks from Jira Cloud and turns them into management-ready Excel reports and live dashboards. Three interaction paths in one monorepo: a Bun CLI for one-shot report generation, a Hono REST backend with queued report jobs, and a React web app featuring an Active Sprint kanban with burndown, daily standup, retro board, impediments tracking, team health analytics, velocity charts, and a collaborative workboard canvas with file uploads.',
+    stack: ['Bun', 'Hono', 'React', 'Vite', 'Drizzle ORM', 'PostgreSQL', 'Redis', 'BullMQ', 'MinIO', 'Turbo'],
+    demo: 'https://jira.nawasena-labs.com/reports',
+    demoLabel: 'jira.nawasena-labs.com',
+    repo: 'https://github.com/Mad1Duck/jira-personal-app',
+    repoLabel: 'github.com/Mad1Duck/jira-personal-app',
+  },
 ];
 
 const screenshotUrl = (url: string) =>
